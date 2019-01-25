@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [ "es2018", "dom" ],
+    "module": "commonjs",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": true,
+    "noImplicitAny": false,
+    "declaration": true,
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
+    "preserveConstEnums": true,
+    "stripInternal": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": false,
+    "strictNullChecks": true,
+    "traceResolution": false,
+    "newLine": "LF",
+    "inlineSources": true,
+    "outDir": "dist",
+    "strict": true
+
+  },
+  "files": [
+    "bin.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "scripts"
+  ]
+}

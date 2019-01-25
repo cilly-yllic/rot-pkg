@@ -1,0 +1,30 @@
+{
+  "name": "rot-pkg",
+  "private": false,
+  "version": "1.0.1",
+  "description": "check diff of package.json and you already installed",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf ./dist && tsc -p . && ts-node ./scripts/package && cp ./README.md ./dist",
+    "package": "ts-node ./scripts/package"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/cilly-yllic/rot-pkg.git"
+  },
+  "keywords": [],
+  "author": "cilly",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cilly-yllic/rot-pkg/issues"
+  },
+  "homepage": "https://github.com/cilly-yllic/rot-pkg#readme",
+  "dependencies": {
+    "execa": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.18",
+    "ts-node": "^8.0.1",
+    "typescript": "^3.2.4"
+  }
+}
