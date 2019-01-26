@@ -1,11 +1,12 @@
 {
   "name": "rot-pkg",
   "private": false,
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "check diff of package.json and you already installed",
   "main": "index.js",
   "scripts": {
     "build": "rm -rf ./dist && tsc -p . && ts-node ./scripts/package && cp ./README.md ./dist",
+    "test": "ts-node ./test ",
     "package": "ts-node ./scripts/package"
   },
   "repository": {
