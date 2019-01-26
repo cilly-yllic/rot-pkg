@@ -1,4 +1,9 @@
-# [3.0.0](https://github.com/cilly-yllic/rot-pkg/compare/2.0.3...3.0.0) (2019-01-26)
+## [3.0.1](https://github.com/cilly-yllic/rot-pkg/compare/2.0.3...3.0.1) (2019-01-26)
+
+
+### Bug Fixes
+
+* **bug:** even if you already installed, npm list show 'UNMET PEER DEPENDENCY' it listed in installed valiables. ([c0481c2](https://github.com/cilly-yllic/rot-pkg/commit/c0481c2))
 
 
 ### Features
