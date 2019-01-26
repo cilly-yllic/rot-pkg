@@ -19,6 +19,7 @@ export default function run( cwd: string = path.join( __dirname, '../..' ) ) {
   const yarnLockUpdatedKeys         = Object.keys( yarnLockUpdated );
 
   if ( !uninstalledKeys.length && !installedKeys.length && !packageLockJasonUpdatedKeys.length && !yarnLockUpdatedKeys.length ) {
+    console.log( 'your package.json is latest' );
     console.log( '> done rot-pkg' );
     return;
   }

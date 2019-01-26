@@ -4,9 +4,11 @@ const PATH    = './yarn.lock';
 
 export default function ( cwd, updated ) {
   if ( execa.shellSync( `test -f ${PATH}`, { cwd, reject: false } ).failed ) {
-    console.log( 'cannot find yarn.lock' );
+    console.log( 'cannot find yarn.lock file' );
     return {};
   }
+
+  console.log( 'found yarn.lock file' );
 
   const lock            = execa.shellSync( `cat ${PATH}`, { cwd, reject: false }).stdout;
   const dependencies    = lock.split( /\n\n/ );
