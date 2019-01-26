@@ -27,19 +27,13 @@ $ npm i -D husky
 ```
 
 
-## After run rot-pkg and only when you need to do `npm i` 
+## when you don't need `npm i` 
+![2019-01-26 19 06 16](https://user-images.githubusercontent.com/16274232/51785842-69335800-219f-11e9-94b4-ac95e7931c78.png)
 
-```
------ uninstalled -----
- some-package-name
+## when you need `npm i`
+![2019-01-26 19 11 56](https://user-images.githubusercontent.com/16274232/51785843-6d5f7580-219f-11e9-9e22-5700935f199d.png)
 
------ installed -----
- some-package-name
+# Feat
 
------ updated -----
- some-package-name
- 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!! Please Update your npm packages 'npm i' !!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-```
+- Unit test
+- For Angular library packages 
