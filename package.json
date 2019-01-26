@@ -1,7 +1,7 @@
 {
   "name": "rot-pkg",
   "private": false,
-  "version": "2.0.5",
+  "version": "3.0.0",
   "description": "check diff of package.json and you already installed",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,20 @@
     "type": "git",
     "url": "git+ssh://git@github.com/cilly-yllic/rot-pkg.git"
   },
-  "keywords": [],
+  "keywords": [
+    "git",
+    "hook",
+    "post-merge",
+    "package.json",
+    "npm",
+    "npm i",
+    "yarn.lock",
+    "yarn install",
+    "git pull",
+    "angular",
+    "angular library",
+    "ng-packagr"
+  ],
   "author": "cilly",
   "license": "MIT",
   "bugs": {
