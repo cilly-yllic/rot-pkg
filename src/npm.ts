@@ -20,9 +20,6 @@ export default function ( cwd: string, packageDependencies: Dependencies ): Resu
     if ( index === 0 || !line || !line.trim() ) {
       return state;
     }
-    if ( line.search( /UNMET PEER DEPENDENCY/ ) >= 0 ) {
-      return state;
-    }
     const removedPrivate  = line.replace( /\s\(.+\)/, '' );
     const matchedPkg      = removedPrivate.match( /\s([^\s]+@[^\s]+)/ );
     if ( !matchedPkg ) {
