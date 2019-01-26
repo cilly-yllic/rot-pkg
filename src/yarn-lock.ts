@@ -1,8 +1,10 @@
 import * as execa from 'execa';
 
+import { Map } from '../interface';
+
 const PATH    = './yarn.lock';
 
-export default function ( cwd, updated ) {
+export default function ( cwd: string, updated: Map.Updated ): Map.LockUpdated {
   if ( execa.shellSync( `test -f ${PATH}`, { cwd, reject: false } ).failed ) {
     console.log( 'cannot find yarn.lock file' );
     return {};
@@ -10,7 +12,7 @@ export default function ( cwd, updated ) {
 
   console.log( 'found yarn.lock file' );
 
-  const lock            = execa.shellSync( `cat ${PATH}`, { cwd, reject: false }).stdout;
+  const lock            = execa.shellSync( `cat ${PATH}`, { cwd, reject: false } ).stdout;
   const dependencies    = lock.split( /\n\n/ );
 
   return Object.keys( updated ).reduce( ( state, pkg ) => {
@@ -22,8 +24,8 @@ export default function ( cwd, updated ) {
     if ( !version ) {
       return state;
     }
-    updated[pkg].after  = version[1];
-    state[pkg]          = updated[pkg];
+    state[pkg]          = { ...updated[pkg] || {} };
+    state[pkg].after    = version[1];
     return state;
   }, {} );
 }

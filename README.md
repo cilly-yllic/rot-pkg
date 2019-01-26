@@ -39,7 +39,10 @@ $ npm i -D husky
 ## when you need `npm i`
 ![2019-01-26 19 11 56](https://user-images.githubusercontent.com/16274232/51785843-6d5f7580-219f-11e9-9e22-5700935f199d.png)
 
+## Package Type
+- root package ( npm, yarn )
+- Angular library packages
+
 # Feat
 
 - Unit test
-- For Angular library packages 

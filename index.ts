@@ -1,51 +1,35 @@
 import * as execa from 'execa';
 import * as path from 'path';
 
-import getNpm from './src/npm';
-import getPackageLockUpdated from './src/package-lock';
-import getYarnLockUpdated from './src/yarn-lock';
+import getChanges from './src/changes';
+import noChanges from './src/no-changes';
+import log from './src/log';
+import getAngularLibraryUpdated from './src/angular-lirary';
 
-export default function run( cwd: string = path.join( __dirname, '../..' ) ) {
+export default function run( cwd: string = path.join( __dirname, '../..' ) ): void {
 
   console.log( '> run rot-pkg' );
-  const { updated, uninstalled, installed } = getNpm( cwd );
-  const uninstalledKeys             = Object.keys( uninstalled );
-  const installedKeys               = Object.keys( installed );
+  const changes                     = getChanges( cwd );
+  if ( changes === undefined ) {
+    return;
+  }
 
-  const packageLockUpdated          = getPackageLockUpdated( cwd, updated );
-  const yarnLockUpdated             = getYarnLockUpdated( cwd, updated );
+  const angularLibraryUpdates       = getAngularLibraryUpdated( cwd, changes.packageDependencies );
 
-  const packageLockJasonUpdatedKeys = Object.keys( packageLockUpdated );
-  const yarnLockUpdatedKeys         = Object.keys( yarnLockUpdated );
-
-  if ( !uninstalledKeys.length && !installedKeys.length && !packageLockJasonUpdatedKeys.length && !yarnLockUpdatedKeys.length ) {
+  if ( noChanges( changes ) && !angularLibraryUpdates.length ) {
     console.log( 'your package.json is latest' );
     console.log( '> done rot-pkg' );
     return;
   }
 
-  if ( uninstalledKeys.length ) {
-    console.log();
-    console.log('----- uninstalled -----');
-    uninstalledKeys.forEach( key => console.log( key, uninstalled[key] ) );
-  }
+  log( changes );
 
-  if ( installedKeys.length ) {
-    console.log();
-    console.log( '----- installed -----' );
-    installedKeys.forEach( key => console.log( key, installed[key] ) );
-  }
-
-  if ( packageLockJasonUpdatedKeys.length ) {
-    console.log();
-    console.log( '----- package updated -----' );
-    packageLockJasonUpdatedKeys.forEach( key => console.log( key, packageLockUpdated[key].before, '-->', packageLockUpdated[key].after ) );
-  }
-
-  if ( yarnLockUpdatedKeys.length ) {
-    console.log();
-    console.log( '----- yarn updated -----' );
-    yarnLockUpdatedKeys.forEach( key => console.log( key, yarnLockUpdated[key].before, '-->', yarnLockUpdated[key].after ) );
+  if ( angularLibraryUpdates.length ) {
+    angularLibraryUpdates.forEach( library => {
+      console.log();
+      console.log( `----- project: ${library.project} -----` );
+      log( library );
+    } );
   }
 
   console.log();
