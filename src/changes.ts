@@ -5,7 +5,7 @@ import getYarnLockUpdated from './yarn-lock';
 
 import { Changes } from '../interface';
 
-export default function run( cwd: string ): Changes | void {
+export default function ( cwd: string ): Changes | void {
   const packageDependencies         = getPackageDependencies( cwd );
   if ( packageDependencies === undefined ) {
     console.log( 'cannot find package.json file' );
