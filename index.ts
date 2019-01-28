@@ -6,7 +6,7 @@ import noChanges from './src/no-changes';
 import log from './src/log';
 import getAngularLibraryUpdated from './src/angular-lirary';
 
-export default function run( cwd: string = path.join( __dirname, '../..' ) ): void {
+export default function ( cwd: string = path.join( __dirname, '../..' ) ): void {
 
   console.log( '> run rot-pkg' );
   const changes                     = getChanges( cwd );
