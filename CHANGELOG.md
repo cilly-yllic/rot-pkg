@@ -1,3 +1,12 @@
+# [3.1.0](https://github.com/cilly-yllic/rot-pkg/compare/3.0.1...3.1.0) (2019-02-02)
+
+
+### Features
+
+* **chalk:** use chalk for log color ([70e4e3f](https://github.com/cilly-yllic/rot-pkg/commit/70e4e3f))
+
+
+
 ## [3.0.1](https://github.com/cilly-yllic/rot-pkg/compare/2.0.3...3.0.1) (2019-01-26)
 
 
