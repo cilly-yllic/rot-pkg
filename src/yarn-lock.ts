@@ -1,16 +1,17 @@
 import * as execa from 'execa';
 
 import { Map } from '../interface';
+import { success, warning } from './log';
 
 const PATH    = './yarn.lock';
 
 export default function ( cwd: string, updated: Map.Updated ): Map.LockUpdated {
   if ( execa.shellSync( `test -f ${PATH}`, { cwd, reject: false } ).failed ) {
-    console.log( 'cannot find yarn.lock file' );
+    warning( 'cannot find yarn.lock file' );
     return {};
   }
 
-  console.log( 'found yarn.lock file' );
+  success( 'found yarn.lock file' );
 
   const lock            = execa.shellSync( `cat ${PATH}`, { cwd, reject: false } ).stdout;
   const dependencies    = lock.split( /\n\n/ );

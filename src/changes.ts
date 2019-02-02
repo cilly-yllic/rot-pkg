@@ -2,13 +2,14 @@ import getNpm from './npm';
 import getPackageDependencies from './package';
 import getPackageLockUpdated from './package-lock';
 import getYarnLockUpdated from './yarn-lock';
+import { warning } from './log';
 
 import { Changes } from '../interface';
 
 export default function ( cwd: string ): Changes | void {
   const packageDependencies         = getPackageDependencies( cwd );
   if ( packageDependencies === undefined ) {
-    console.log( 'cannot find package.json file' );
+    warning( 'cannot find package.json file' );
     return;
   }
   const { uninstalled, updated, installed } = getNpm( cwd, packageDependencies );

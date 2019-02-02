@@ -17,9 +17,7 @@ const dist = {
   repository: packageJson.repository,
   bugs: packageJson.bugs,
   homepage: packageJson.homepage,
-  dependencies: {
-    "execa": packageJson.dependencies.execa
-  },
+  dependencies: packageJson.dependencies,
 };
 
 fs.writeFileSync( `./dist/package.json` , JSON.stringify( dist, null, '  ' ) );

@@ -2,6 +2,7 @@ import * as execa from 'execa';
 
 import getChanges from './changes';
 import noChanges from './no-changes';
+import { success, info } from './log';
 import { Dependencies, ProjectsChanges } from '../interface';
 
 const PATH    = './angular.json';
@@ -16,7 +17,7 @@ export default function ( cwd: string, packageDependencies: Dependencies ): Proj
     return empty;
   }
   console.log();
-  console.log( 'found Angular library' );
+  success( 'found Angular library' );
   const angularJson   = JSON.parse( execa.shellSync( `cat ${PATH}`, { cwd, reject: false } ).stdout );
   if ( !angularJson || !angularJson.projects ) {
     return empty;
@@ -27,7 +28,7 @@ export default function ( cwd: string, packageDependencies: Dependencies ): Proj
       return state;
     }
     console.log();
-    console.log( `> run rot-pkg project: ${project}` );
+    info( `> run rot-pkg project: ${project}` );
     const changes = getChanges( `${cwd}/${config.root}` );
     if ( changes === undefined ) {
       return state;
