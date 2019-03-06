@@ -1,20 +1,44 @@
-import getNpm from './npm';
-import getPackageDependencies from './package';
-import getPackageLockUpdated from './package-lock';
-import getYarnLockUpdated from './yarn-lock';
-import { warning } from './log';
+import getLock, { Type } from './lock';
+import getNodeModules from './node-modules';
+import { result } from './log';
+import { NodeModules } from './interface';
 
-import { Changes } from '../interface';
+const getChanges = ( path: string, nodeModules: NodeModules, type: Type ): void => {
+  const lockFileModules = getLock( path, type );
 
-export default function ( cwd: string ): Changes | void {
-  const packageDependencies         = getPackageDependencies( cwd );
-  if ( packageDependencies === undefined ) {
-    warning( 'cannot find package.json file' );
+  if ( lockFileModules === undefined ) {
     return;
   }
-  const { uninstalled, updated, installed } = getNpm( cwd, packageDependencies );
-  const packageLockUpdated          = getPackageLockUpdated( cwd, updated );
-  const yarnLockUpdated             = getYarnLockUpdated( cwd, updated );
 
-  return { packageDependencies, uninstalled, installed, packageLockUpdated, yarnLockUpdated };
+  const installed       = {};
+  const uninstalled     = {};
+  const updated         = {};
+
+  Object.keys( lockFileModules ).forEach( key => {
+    if ( !nodeModules[key] ) {
+      installed[key] = lockFileModules[key];
+      return;
+    }
+    const versions      = Array.isArray( lockFileModules[key] ) ? <string[]>lockFileModules[key] : [ <string>lockFileModules[key] ];
+    const moduleVersion = type === 'npm' && nodeModules[key].resolved ? nodeModules[key].resolved : nodeModules[key].version;
+
+    if ( versions.some( version => version === moduleVersion ) ) {
+      return;
+    }
+    updated[key]  = { before: moduleVersion, after: versions.join( ', ' ) };
+  } );
+  Object.keys( nodeModules ).forEach( key => {
+    if ( !!lockFileModules[key] ) {
+      return;
+    }
+    uninstalled[key] = nodeModules[key].version;
+  } );
+
+  result( { installed, uninstalled, updated }, type, path );
+};
+
+export default function ( path: string ): void {
+  const nodeModules = getNodeModules( path );
+  getChanges( path, nodeModules, 'npm' );
+  getChanges( path, nodeModules, 'yarn' );
 }
