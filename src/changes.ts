@@ -25,7 +25,7 @@ const getChanges = ( path: string, nodeModules: NodeModules, type: Type ): void 
     if ( versions.some( version => version === moduleVersion ) ) {
       return;
     }
-    updated[key]  = { before: moduleVersion, after: versions.join( ', ' ) };
+    updated[key]  = { before: nodeModules[key].version, after: versions.join( ', ' ) };
   } );
   Object.keys( nodeModules ).forEach( key => {
     if ( !!lockFileModules[key] ) {
