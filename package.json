@@ -1,13 +1,14 @@
 {
   "name": "rot-pkg",
   "private": false,
-  "version": "3.1.0",
+  "version": "4.0.0",
   "description": "check diff of package.json and you already installed",
   "main": "index.js",
   "scripts": {
     "build": "rm -rf ./dist && tsc -p . && npm run package && cp ./README.md ./dist",
     "test": "ts-node ./test ",
     "package": "ts-node ./scripts/package",
+    "i": "sh ./scripts/install.sh",
     "changelog": "node changelog.js"
   },
   "repository": {
@@ -35,8 +36,7 @@
   },
   "homepage": "https://github.com/cilly-yllic/rot-pkg#readme",
   "dependencies": {
-    "chalk": "^2.4.2",
-    "execa": "^1.0.0"
+    "chalk": "^2.4.2"
   },
   "devDependencies": {
     "@types/node": "^10.12.18",
