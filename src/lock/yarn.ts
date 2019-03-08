@@ -24,14 +24,19 @@ export default function ( cwd: string ): Modules | undefined {
     }
     const module        = firstLine.match( /^"?(.+)@/ );
     const version       = current.match( /\n\s*version\s+?"([^"]+)"/ );
+    const resolved      = current.match( /\n\s*resolved\s+?"([^"]+)"/ );
     if ( !module || !version ) {
       return acc;
     }
     const moduleName    = module[1];
     if ( !acc[ moduleName ] ) {
-      acc[ moduleName ] = [];
+      acc[ moduleName ] = {
+        resolved: [],
+        version: []
+      };
     }
-    acc[ moduleName ].push( version[1] );
+    acc[ moduleName ].version.push( version[1] );
+    acc[ moduleName ].resolved.push( !!resolved ? resolved[1] : '' );
     return acc;
   }, {} );
 }

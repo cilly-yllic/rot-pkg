@@ -1,7 +1,7 @@
 {
   "name": "rot-pkg",
   "private": false,
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "check diff of package.json and you already installed",
   "main": "index.js",
   "scripts": {

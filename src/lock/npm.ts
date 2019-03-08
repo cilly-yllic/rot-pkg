@@ -20,7 +20,10 @@ export default function ( cwd: string ): Modules | undefined {
   }
   const dependencies  = json.dependencies;
   return Object.keys( dependencies ).reduce( ( acc, key ) => {
-    acc[key] = dependencies[key].resolved || dependencies[key].version;
+    acc[key] = {
+      resolved: dependencies[key].resolved || dependencies[key].version,
+      version: dependencies[key].version,
+    };
     return acc;
   }, {} );
 }

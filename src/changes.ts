@@ -3,7 +3,9 @@ import getNodeModules from './node-modules';
 import { result } from './log';
 import { NodeModules } from './interface';
 
-const getChanges = ( path: string, nodeModules: NodeModules, type: Type ): void => {
+const getStrings  = ( value: string | string[] ): string[] => Array.isArray( value ) ? value : [ value ];
+
+const getChanges  = ( path: string, nodeModules: NodeModules, type: Type ): void => {
   const lockFileModules = getLock( path, type );
 
   if ( lockFileModules === undefined ) {
@@ -15,23 +17,24 @@ const getChanges = ( path: string, nodeModules: NodeModules, type: Type ): void 
   const updated         = {};
 
   Object.keys( lockFileModules ).forEach( key => {
+    const logVersion    = getStrings( lockFileModules[key].version ).join( ', ' );
     if ( !nodeModules[key] ) {
-      installed[key] = lockFileModules[key];
+      installed[key] = logVersion;
       return;
     }
-    const versions      = Array.isArray( lockFileModules[key] ) ? <string[]>lockFileModules[key] : [ <string>lockFileModules[key] ];
+    const versions      = type === 'npm' ? getStrings( lockFileModules[key].resolved ) : getStrings( lockFileModules[key].version )
     const moduleVersion = type === 'npm' && nodeModules[key].resolved ? nodeModules[key].resolved : nodeModules[key].version;
 
     if ( versions.some( version => version === moduleVersion ) ) {
       return;
     }
-    updated[key]  = { before: nodeModules[key].version, after: versions.join( ', ' ) };
+    updated[key]        = { before: nodeModules[key].version, after: logVersion };
   } );
   Object.keys( nodeModules ).forEach( key => {
     if ( !!lockFileModules[key] ) {
       return;
     }
-    uninstalled[key] = nodeModules[key].version;
+    uninstalled[key]    = nodeModules[key].version;
   } );
 
   result( { installed, uninstalled, updated }, type, path );

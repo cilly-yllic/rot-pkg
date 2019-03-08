@@ -3,7 +3,10 @@ export interface Dependencies {
 }
 
 export interface Modules {
-  [key: string]: string[] | string;
+  [key: string]: {
+    version: string | string [];
+    resolved: string | string[];
+  };
 }
 
 export interface NodeModules {
