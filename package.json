@@ -8,7 +8,6 @@
     "build": "rm -rf ./dist && tsc -p . && npm run package && cp ./README.md ./dist",
     "test": "ts-node ./test ",
     "package": "ts-node ./scripts/package",
-    "i": "sh ./scripts/install.sh",
     "changelog": "node changelog.js"
   },
   "repository": {
