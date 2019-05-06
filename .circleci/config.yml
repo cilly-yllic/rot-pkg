@@ -1,0 +1,60 @@
+version: 2.1
+
+executors:
+  default:
+    working_directory: /var/tmp/workspace
+    docker:
+      - image: circleci/node:latest
+
+commands:
+  restore_module:
+    steps:
+      - restore_cache:
+          name: Restore Cache
+          key: module-{{ .Environment.CACHE_VERSION }}-repos-{{ .Branch }}-{{ .Revision }}
+
+jobs:
+  # checkout
+  checkout_repos:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - run:
+          name: npm install
+          command: npm i
+      - save_cache:
+          key: module-{{ .Environment.CACHE_VERSION }}-repos-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - .
+  # run test
+  npm_test:
+    executor:
+      name: default
+    steps:
+      - restore_module
+      - run:
+          name: run test
+          command: npm run test
+  # run build
+  npm_build:
+    executor:
+      name: default
+    steps:
+      - restore_module
+      - run:
+          name: run build
+          command: npm run build
+
+
+workflows:
+  # Main
+  MainWorkflow:
+    jobs:
+      - checkout_repos
+      - npm_test:
+          requires:
+            - checkout_repos
+      - npm_build:
+          requires:
+            - checkout_repos
