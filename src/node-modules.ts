@@ -32,7 +32,7 @@ export default function ( cwd: string ): NodeModules {
     return {};
   }
   return files.reduce( ( acc: NodeModules, file: string ): NodeModules => {
-    if ( file === '.bin' ) {
+    if ( file.match( /^\./ ) ) {
       return acc;
     }
     if ( isScoped( file ) ) {
