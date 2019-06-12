@@ -22,7 +22,7 @@ export default function ( cwd: string ): Modules | undefined {
     if ( !firstLine ) {
       return acc;
     }
-    const module        = firstLine.match( /^"?(.+)@/ );
+    const module        = firstLine.match( /^"?(@?[^@]+)/ );
     const version       = current.match( /\n\s*version\s+?"([^"]+)"/ );
     const resolved      = current.match( /\n\s*resolved\s+?"([^"]+)"/ );
     if ( !module || !version ) {
