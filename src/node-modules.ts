@@ -17,7 +17,8 @@ const getScopedPackages = ( path: string, file: string ): NodeModules => {
     if ( !json ) {
       return acc;
     }
-    acc[ join( file, scopedModulePath ) ] = {
+    const scopeModuleKey = `${file}/${scopedModulePath}`;
+    acc[ scopeModuleKey ] = {
       version: `${json.version || ''}`,
       resolved: `${json._resolved || ''}`
     };
