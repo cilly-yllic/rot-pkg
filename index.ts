@@ -1,13 +1,18 @@
 import { join } from 'path';
 
 import { info } from './src/log';
+import { Type } from './src/lock';
 import angularLibrary from './src/angular-library';
 import changes from './src/changes';
 
 
-export default function ( cwd: string = join( __dirname, '../..' ) ): void {
+export default function ( cwd: string = join( __dirname, '../..' ), type: Type = 'npm' ): object {
   info( '> run rot-pkg' );
-  changes( cwd );
-  angularLibrary( cwd );
+  const pkgResults = changes( cwd, type );
+  const angularResults = angularLibrary( cwd, type );
   info( '> done rot-pkg' );
+  return {
+    packages: pkgResults,
+    angular: angularResults,
+  };
 }
