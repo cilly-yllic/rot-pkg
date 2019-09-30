@@ -5,11 +5,11 @@ import { NodeModules } from './interface';
 
 const getStrings  = ( value: string | string[] ): string[] => Array.isArray( value ) ? value : [ value ];
 
-const getChanges  = ( path: string, nodeModules: NodeModules, type: Type ): void => {
+const getChanges  = ( path: string, nodeModules: NodeModules, type: Type ): object => {
   const lockFileModules = getLock( path, type );
 
   if ( lockFileModules === undefined ) {
-    return;
+    return {};
   }
 
   const installed       = {};
@@ -37,11 +37,12 @@ const getChanges  = ( path: string, nodeModules: NodeModules, type: Type ): void
     uninstalled[key]    = nodeModules[key].version;
   } );
 
-  result( { installed, uninstalled, updated }, type, path );
+  const results = { installed, uninstalled, updated };
+  result( results, type, path );
+  return results;
 };
 
-export default function ( path: string ): void {
+export default function ( path: string , type: Type ): object {
   const nodeModules = getNodeModules( path );
-  getChanges( path, nodeModules, 'npm' );
-  getChanges( path, nodeModules, 'yarn' );
+  return getChanges( path, nodeModules, type ) || {};
 }

@@ -17,28 +17,35 @@ export const result     = ( changes, type, path: string ): void => {
   const installedKeys   = Object.keys( changes.installed );
   const updatedKeys     = Object.keys( changes.updated );
 
+  let shouldUpdate = false;
+
   if ( uninstalledKeys.length ) {
     console.log();
     warning('----- uninstalled -----');
     uninstalledKeys.forEach( key => info( `${key} : ${changes.uninstalled[key]}` ) );
+    shouldUpdate = true;
   }
 
   if ( installedKeys.length ) {
     console.log();
     warning( '----- installed -----' );
     installedKeys.forEach( key => info( `${key} : ${changes.installed[key]}` ) );
+    shouldUpdate = true;
   }
 
   if ( updatedKeys.length ) {
     console.log();
     console.log( '----- package updated -----' );
     updatedKeys.forEach( key => info( `${key} : ${changes.updated[key].before} --> ${changes.updated[key].after}` ) );
+    shouldUpdate = true;
   }
 
-  console.log();
-  console.log();
-  console.log( 'dir:', path );
-  error( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' );
-  error( `!!! Please Update your packages \'${type} install\' !!!` );
-  error( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' );
+  if (shouldUpdate) {
+    console.log();
+    console.log();
+    console.log('dir:', path);
+    error('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    error(`!!! Please Update your packages \'${type} install\' !!!`);
+    error('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  }
 };
